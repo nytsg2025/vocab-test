@@ -47,7 +47,7 @@
     <!-- 시작 화면 -->
     <div id="start-screen" class="container">
         <h1>3분 어휘력 진단평가</h1>
-        <p class="desc">제시된 단어의 뜻(한국어)이나 스펠링(영어)을 입력하세요.<br><strong>비슷한 뜻(막대한, 성공하다 등)을 적어도 모두 정답 처리됩니다!</strong><br><br>정답을 맞히면 난이도가 올라가고 틀리면 내려갑니다.<br>시간은 딱 3분! 당신의 레벨을 확인해보세요.</p>
+        <p class="desc">제시된 단어의 뜻(한국어)이나 스펠링(영어)을 입력하세요.<br><strong>비슷한 뜻을 적어도 모두 똑똑하게 정답 처리됩니다!</strong><br><br>정답을 맞히면 난이도가 올라가고 틀리면 내려갑니다.<br>시간은 딱 3분! 당신의 레벨을 확인해보세요.</p>
         <button onclick="startGame()">진단 시작하기</button>
     </div>
 
@@ -83,12 +83,12 @@
     </div>
 
     <script>
-        // ⭐ 업데이트된 단어 데이터 (roots: 정답으로 인정되는 모든 핵심 키워드 모음)
+        // ⭐ 업데이트된 단어 데이터 (요청하신 뜻과 어근 완벽 반영)
         const wordData =[
             { en: "evolutionary", ko: "진화의, 진화론적인", roots: ["진화"] },
-            { en: "biologist", ko: "생물학자", roots: ["생물학"] },
-            { en: "locate", ko: "위치를 찾다", roots:["위치", "알아내", "발견", "찾다", "찾기", "찾음", "찾아"] },
-            { en: "fascinating", ko: "대단히 흥미로운, 매력적인", roots:["흥미", "매력", "멋진", "재미"] },
+            { en: "biologist", ko: "생물학자", roots:["생물학"] },
+            { en: "locate", ko: "위치시키다, 위치하다, 위치를 찾다", roots:["위치", "알아내", "발견", "찾다", "찾기", "찾음", "찾아"] },
+            { en: "fascinating", ko: "매혹적인, 대단히 흥미로운", roots:["매혹", "흥미", "매력", "멋진", "재미"] },
             { en: "companion", ko: "친구, 동반자", roots: ["친구", "동반", "동행", "반려", "동료"] },
             { en: "responsive", ko: "반응하는", roots:["반응", "민감", "호응", "대답"] },
             { en: "behavior", ko: "행동", roots:["행동", "품행", "태도", "행위"] },
@@ -97,48 +97,48 @@
             { en: "ancestor", ko: "조상", roots: ["조상", "선조", "선대"] },
             { en: "at random", ko: "무작위로", roots:["무작위", "임의", "맘대로", "마음대로", "랜덤", "마구잡이"] },
             { en: "conclude", ko: "결론을 내다", roots:["결론", "끝내", "마치", "끝마"] },
-            { en: "species", ko: "종(種)", roots: ["종류", "종"] },
+            { en: "species", ko: "종(種)", roots:["종류", "종"] },
             { en: "evolve", ko: "발달하다, 진화하다", roots: ["발달", "진화", "발전"] },
             { en: "colleague", ko: "동료", roots: ["동료", "동업", "친구"] },
             { en: "genetically", ko: "유전적으로", roots: ["유전"] },
             { en: "cooperative", ko: "협력적인", roots:["협력", "협동", "협조"] },
             { en: "device", ko: "장치", roots:["장치", "기구", "도구", "기기", "설비"] },
             { en: "occasionally", ko: "가끔", roots:["가끔", "때때", "종종", "이따금"] },
-            { en: "get along", ko: "잘 지내다", roots: ["잘지내", "어울리", "사이", "친하"] },
+            { en: "get along", ko: "잘 지내다", roots:["잘지내", "어울리", "사이", "친하"] },
             { en: "extinction", ko: "멸종", roots: ["멸종", "소멸"] },
             { en: "attention", ko: "관심, 주의", roots:["관심", "주의", "집중", "주목"] },
             { en: "superior", ko: "우월한", roots:["우월", "뛰어난", "우수", "상급", "나은", "월등"] },
             { en: "attribute", ko: "속성, 자질", roots:["속성", "자질", "특징", "특성", "기인", "탓"] },
             { en: "ultimately", ko: "결국, 궁극적으로", roots:["결국", "궁극", "마침내", "최후", "최종", "결론"] },
             { en: "thrive", ko: "번창하다, 잘 자라다", roots:["번창", "번성", "잘자라", "번영", "성공", "무성"] },
-            { en: "competitive", ko: "경쟁의, 경쟁력 있는", roots: ["경쟁"] },
+            { en: "competitive", ko: "경쟁적인, 경쟁력 있는", roots: ["경쟁"] },
             { en: "propose", ko: "제안하다", roots:["제안", "청혼", "제시", "제의"] },
-            { en: "alternative", ko: "대체의", roots: ["대체", "대안", "대신"] },
+            { en: "alternative", ko: "대안, 대체의", roots:["대체", "대안", "대신"] },
             { en: "comforting", ko: "위안이 되는", roots: ["위안", "위로", "편안"] },
             { en: "bouquet", ko: "꽃다발", roots:["꽃다발", "부케"] },
-            { en: "harmonize", ko: "조화를 이루다, 어울리다", roots: ["조화", "어울리", "화합", "맞추"] },
+            { en: "harmonize", ko: "조화를 이루다, 어울리다", roots:["조화", "어울리", "화합", "맞추"] },
             { en: "contribute", ko: "기여하다, 도움이 되다", roots:["기여", "도움", "공헌", "이바지", "기부"] },
-            { en: "flourish", ko: "번창하다, 번성하다", roots:["번창", "번성", "잘자라", "성공", "융성", "번영"] },
+            { en: "flourish", ko: "성공하다, 번창하다, 번성하다", roots:["번창", "번성", "잘자라", "성공", "융성", "번영"] },
             { en: "sentiment", ko: "의견, 정서", roots:["의견", "정서", "감정", "생각", "기분", "정취"] },
             { en: "spring up", ko: "생겨나다", roots:["생겨", "생기", "솟아", "나타", "발생", "튀어"] },
             { en: "approximately", ko: "거의, 대략", roots:["거의", "대략", "대충", "대부분", "얼추", "약"] },
             { en: "consume", ko: "소비하다, 먹다", roots:["소비", "섭취", "마시", "먹다", "먹어", "먹음", "쓰다", "사용"] },
-            { en: "necessity", ko: "필수품", roots: ["필수", "필요", "불가피"] },
+            { en: "necessity", ko: "필수품", roots:["필수", "필요", "불가피"] },
             { en: "widespread", ko: "광범위한, 널리 퍼진", roots:["광범위", "널리", "만연", "폭넓", "퍼진"] },
-            { en: "come at a cost", ko: "대가가 따르다", roots: ["대가", "희생", "비용"] },
+            { en: "come at a cost", ko: "대가가 따르다", roots:["대가", "희생", "비용"] },
             { en: "substantial", ko: "상당한", roots:["상당", "실질", "엄청", "막대", "크다", "큰", "많다", "많은"] },
             { en: "extraction", ko: "추출", roots:["추출", "뽑아", "채굴", "뽑기", "뽑는"] },
-            { en: "generate", ko: "발생시키다", roots:["발생", "만들", "생성", "일으키"] },
+            { en: "generate", ko: "생성하다, 발생시키다", roots:["생성", "발생", "만들", "일으키"] },
             { en: "significant", ko: "상당한, 커다란", roots:["상당", "커다", "중요", "의미", "중대", "크다", "큰"] },
             { en: "remaining", ko: "남아 있는", roots:["남아", "남은", "잔여"] },
             { en: "dispose of", ko: "처리하다", roots: ["처리", "버리", "처분", "없애"] },
             { en: "vast", ko: "어마어마한, 방대한", roots:["어마어마", "방대", "거대", "엄청", "광대", "막대", "크다", "큰", "넓다", "넓은"] },
             { en: "quantity", ko: "양", roots: ["수량", "분량", "크기", "양"] },
-            { en: "landfill", ko: "쓰레기 매립지", roots: ["매립", "쓰레기장"] },
+            { en: "landfill", ko: "쓰레기 매립지", roots:["매립", "쓰레기장"] },
             { en: "release", ko: "방출하다, 풀어 주다", roots:["방출", "풀어", "놓아", "석방", "발표", "출시", "해방", "배출"] },
-            { en: "potent", ko: "강력한, 유력한", roots: ["강력", "유력", "힘센", "강한", "효능"] },
+            { en: "potent", ko: "강력한, 유력한", roots:["강력", "유력", "힘센", "강한", "효능"] },
             { en: "incinerate", ko: "소각하다", roots:["소각", "태우", "불태"] },
-            { en: "take into account", ko: "고려하다", roots: ["고려", "참작", "생각", "감안", "계산"] },
+            { en: "take into account", ko: "고려하다", roots:["고려", "참작", "생각", "감안", "계산"] },
             { en: "compound", ko: "화합물, 복합체", roots:["화합", "복합", "혼합", "합성"] },
             { en: "measure", ko: "대책, 조치", roots:["대책", "조치", "측정", "수단", "방법", "재다", "재기"] },
             { en: "in action", ko: "활동하는, 작동하는", roots:["활동", "작동", "움직이", "실행"] },
@@ -149,16 +149,16 @@
             { en: "transform", ko: "변형시키다, 바꾸다", roots:["변형", "바꾸", "변환", "탈바꿈", "개조", "바뀜"] },
             { en: "produce", ko: "농작물, 농산물", roots:["농작", "농산", "생산", "만들"] },
             { en: "repurpose", ko: "다른 목적에 맞게 만들다", roots:["목적", "용도", "재사용", "개조", "재활용"] },
-            { en: "in this manner", ko: "이런 식으로", roots: ["이런식", "이와같이", "이런방법", "이렇게"] },
+            { en: "in this manner", ko: "이런 식으로", roots:["이런식", "이와같이", "이런방법", "이렇게"] },
             { en: "a wide range of", ko: "다양한", roots:["다양", "광범위", "폭넓", "여러", "넓은"] },
             { en: "log", ko: "통나무, 장작", roots:["통나무", "장작", "일지", "기록"] },
-            { en: "fabric", ko: "직물, 천", roots:["직물", "옷감", "구조", "섬유", "천"] },
+            { en: "fabric", ko: "섬유, 직물, 천", roots:["섬유", "직물", "옷감", "구조", "천"] },
             { en: "absorb", ko: "흡수하다", roots: ["흡수", "빨아", "받아"] },
             { en: "appealing", ko: "매력적인, 흥미로운", roots:["매력", "흥미", "호소", "끌리"] },
             { en: "appearance", ko: "외관", roots:["외관", "겉모습", "출현", "나타", "외모", "생김새"] },
-            { en: "preserve", ko: "보존하다", roots: ["보존", "보호", "유지", "지키"] },
+            { en: "preserve", ko: "보존하다", roots:["보존", "보호", "유지", "지키"] },
             { en: "take steps", ko: "조치를 취하다", roots:["조치", "절차", "단계", "행동"] },
-            { en: "sustainable", ko: "지속 가능한", roots: ["지속", "유지", "견딜"] },
+            { en: "sustainable", ko: "지속 가능한", roots:["지속", "유지", "견딜"] },
             { en: "dedicate", ko: "헌신하다, 바치다", roots:["헌신", "전념", "바치", "쏟다"] },
             { en: "encourage", ko: "격려하다", roots:["격려", "장려", "용기", "촉구", "응원", "권장"] }
         ];
@@ -221,21 +221,17 @@
             inputEl.focus();
         }
 
-        // ⭐ 초강력 스마트 채점 로직 (키워드/어근 중심)
+        // ⭐ 초강력 스마트 채점 로직
         function checkKoreanAnswer(input, wordObj) {
-            const inputClean = input.replace(/\s+/g, ''); // 공백 완전 제거
-            const roots = wordObj.roots; // 정답 인정 핵심 어근들
+            const inputClean = input.replace(/\s+/g, '');
+            const roots = wordObj.roots;
 
             return roots.some(root => {
                 if (root.length === 1) {
-                    // 1글자짜리 명사(종, 양, 천, 약 등)는 정확히 일치하거나 기본적인 조사만 허용
                     return inputClean === root || 
                            inputClean === root + "이다" || 
                            inputClean === root + "로";
                 } else {
-                    // 2글자 이상은 학생 입력값에 포함되어 있기만 하면 무조건 정답 인정
-                    // 예: root가 "막대"일 때 -> "막대한", "막대함" 모두 통과
-                    // 예: root가 "성공"일 때 -> "성공하다", "크게성공하다" 모두 통과
                     return inputClean.includes(root);
                 }
             });
