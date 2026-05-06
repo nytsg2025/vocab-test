@@ -47,7 +47,7 @@
     <!-- 시작 화면 -->
     <div id="start-screen" class="container">
         <h1>3분 어휘력 진단평가</h1>
-        <p class="desc">제시된 단어의 뜻(한국어)이나 스펠링(영어)을 입력하세요.<br>정답을 맞히면 난이도가 올라가고 틀리면 내려갑니다.<br>시간은 딱 3분! 당신의 레벨을 확인해보세요.</p>
+        <p class="desc">제시된 단어의 뜻(한국어)이나 스펠링(영어)을 입력하세요.<br>유의어를 적어도 모두 정답으로 인정됩니다!<br>정답을 맞히면 난이도가 올라가고 틀리면 내려갑니다.<br>시간은 딱 3분! 당신의 레벨을 확인해보세요.</p>
         <button onclick="startGame()">진단 시작하기</button>
     </div>
 
@@ -83,84 +83,84 @@
     </div>
 
     <script>
-        // 단어 데이터 (제시해주신 단어장)
+        // 단어 데이터 (유의어 처리 포함)
         const wordData =[
-            { en: "evolutionary", ko: "진화의, 진화론적인" },
-            { en: "biologist", ko: "생물학자" },
-            { en: "locate", ko: "위치를 찾다" },
-            { en: "fascinating", ko: "대단히 흥미로운, 매력적인" },
-            { en: "companion", ko: "친구, 동반자" },
-            { en: "responsive", ko: "반응하는" },
-            { en: "behavior", ko: "행동" },
-            { en: "anthropologist", ko: "인류학자" },
-            { en: "conduct", ko: "행동하다, 활동을 하다" },
-            { en: "ancestor", ko: "조상" },
-            { en: "at random", ko: "무작위로" },
-            { en: "conclude", ko: "결론을 내다" },
-            { en: "species", ko: "종" },
-            { en: "evolve", ko: "발달하다, 진화하다" },
-            { en: "colleague", ko: "동료" },
-            { en: "genetically", ko: "유전적으로" },
-            { en: "cooperative", ko: "협력적인" },
-            { en: "device", ko: "장치" },
-            { en: "occasionally", ko: "가끔" },
-            { en: "get along", ko: "잘 지내다" },
-            { en: "extinction", ko: "멸종" },
-            { en: "attention", ko: "관심, 주의" },
-            { en: "superior", ko: "우월한" },
-            { en: "attribute", ko: "속성, 자질" },
-            { en: "ultimately", ko: "결국, 궁극적으로" },
-            { en: "thrive", ko: "번창하다, 잘 자라다" },
-            { en: "competitive", ko: "경쟁의, 경쟁력 있는" },
-            { en: "propose", ko: "제안하다" },
-            { en: "alternative", ko: "대체의" },
-            { en: "comforting", ko: "위안이 되는" },
-            { en: "bouquet", ko: "꽃다발" },
-            { en: "harmonize", ko: "조화를 이루다, 어울리다" },
-            { en: "contribute", ko: "기여하다, 도움이 되다" },
-            { en: "flourish", ko: "번창하다, 번성하다" },
-            { en: "sentiment", ko: "의견, 정서" },
-            { en: "spring up", ko: "생겨나다" },
-            { en: "approximately", ko: "거의, 대략" },
-            { en: "consume", ko: "소비하다, 먹다" },
-            { en: "necessity", ko: "필수품" },
-            { en: "widespread", ko: "광범위한, 널리 퍼진" },
-            { en: "come at a cost", ko: "대가가 따르다" },
-            { en: "substantial", ko: "상당한" },
-            { en: "extraction", ko: "추출" },
-            { en: "generate", ko: "발생시키다" },
-            { en: "significant", ko: "상당한, 커다란" },
-            { en: "remaining", ko: "남아 있는" },
-            { en: "dispose of", ko: "처리하다" },
-            { en: "vast", ko: "어마어마한, 방대한" },
-            { en: "quantity", ko: "양" },
-            { en: "landfill", ko: "쓰레기 매립지" },
-            { en: "release", ko: "방출하다, 풀어 주다" },
-            { en: "potent", ko: "강력한, 유력한" },
-            { en: "incinerate", ko: "소각하다" },
-            { en: "take into account", ko: "고려하다" },
-            { en: "compound", ko: "화합물, 복합체" },
-            { en: "measure", ko: "대책, 조치" },
-            { en: "in action", ko: "활동하는, 작동하는" },
-            { en: "collaborate", ko: "협력하다" },
-            { en: "process", ko: "처리하다, 가공하다" },
-            { en: "impurity", ko: "불순물" },
-            { en: "fertilizer", ko: "비료" },
-            { en: "transform", ko: "변형시키다, 바꾸다" },
-            { en: "produce", ko: "농작물, 농산물" },
-            { en: "repurpose", ko: "다른 목적에 맞게 만들다" },
-            { en: "in this manner", ko: "이런 식으로" },
-            { en: "a wide range of", ko: "다양한" },
-            { en: "log", ko: "통나무, 장작" },
-            { en: "fabric", ko: "직물, 천" },
-            { en: "absorb", ko: "흡수하다" },
-            { en: "appealing", ko: "매력적인, 흥미로운" },
-            { en: "appearance", ko: "외관" },
-            { en: "preserve", ko: "보존하다" },
-            { en: "take steps", ko: "조치를 취하다" },
-            { en: "sustainable", ko: "지속 가능한" },
-            { en: "dedicate to", ko: "헌신하다, 바치다" },
-            { en: "encourage", ko: "격려하다" }
+            { en: "evolutionary", ko: "진화의, 진화론적인", synonyms: ["진화"] },
+            { en: "biologist", ko: "생물학자", synonyms: ["생물학"] },
+            { en: "locate", ko: "위치를 찾다", synonyms:["찾다", "위치하다", "알아내다", "발견하다"] },
+            { en: "fascinating", ko: "대단히 흥미로운, 매력적인", synonyms:["흥미로운", "매력", "멋진", "재미있는"] },
+            { en: "companion", ko: "친구, 동반자", synonyms: ["동행", "반려", "벗", "동료"] },
+            { en: "responsive", ko: "반응하는", synonyms:["민감한", "호응하는", "대답하는", "반응"] },
+            { en: "behavior", ko: "행동", synonyms: ["품행", "태도", "행위"] },
+            { en: "anthropologist", ko: "인류학자", synonyms: ["인류학"] },
+            { en: "conduct", ko: "행동하다, 활동을 하다", synonyms:["수행하다", "지휘하다", "실시하다", "하다", "진행하다"] },
+            { en: "ancestor", ko: "조상", synonyms: ["선조", "조상님", "선대"] },
+            { en: "at random", ko: "무작위로", synonyms:["임의로", "맘대로", "무작위", "랜덤"] },
+            { en: "conclude", ko: "결론을 내다", synonyms: ["끝내다", "마치다", "결론짓다", "결론"] },
+            { en: "species", ko: "종", synonyms: ["종류"] },
+            { en: "evolve", ko: "발달하다, 진화하다", synonyms:["발전하다", "발달", "진화"] },
+            { en: "colleague", ko: "동료", synonyms: ["직장동료", "동업자", "친구"] },
+            { en: "genetically", ko: "유전적으로", synonyms: ["유전적인", "유전"] },
+            { en: "cooperative", ko: "협력적인", synonyms:["협동하는", "협동적인", "협조적인", "협력"] },
+            { en: "device", ko: "장치", synonyms: ["기구", "도구", "기기", "설비"] },
+            { en: "occasionally", ko: "가끔", synonyms:["때때로", "종종", "이따금", "가끔씩"] },
+            { en: "get along", ko: "잘 지내다", synonyms:["어울리다", "사이좋게 지내다", "친하게 지내다"] },
+            { en: "extinction", ko: "멸종", synonyms:["소멸", "멸종됨"] },
+            { en: "attention", ko: "관심, 주의", synonyms:["집중", "주목", "주의력"] },
+            { en: "superior", ko: "우월한", synonyms:["뛰어난", "우수한", "상급의", "나은", "월등한"] },
+            { en: "attribute", ko: "속성, 자질", synonyms: ["특징", "특성", "탓으로 돌리다", "기인하다"] },
+            { en: "ultimately", ko: "결국, 궁극적으로", synonyms:["마침내", "최후로", "최종적으로", "결론적으로"] },
+            { en: "thrive", ko: "번창하다, 잘 자라다", synonyms:["번영하다", "성공하다", "무성하다", "잘자라다"] },
+            { en: "competitive", ko: "경쟁의, 경쟁력 있는", synonyms: ["경쟁적인", "경쟁"] },
+            { en: "propose", ko: "제안하다", synonyms:["청혼하다", "제시하다", "제의하다"] },
+            { en: "alternative", ko: "대체의", synonyms:["대안", "대안의", "대신의", "대체"] },
+            { en: "comforting", ko: "위안이 되는", synonyms:["위로가 되는", "편안하게 하는", "위로"] },
+            { en: "bouquet", ko: "꽃다발", synonyms: ["부케"] },
+            { en: "harmonize", ko: "조화를 이루다, 어울리다", synonyms: ["화합하다", "맞추다", "조화"] },
+            { en: "contribute", ko: "기여하다, 도움이 되다", synonyms:["공헌하다", "이바지하다", "기부하다", "기여"] },
+            { en: "flourish", ko: "번창하다, 번성하다", synonyms:["잘자라다", "성공하다", "융성하다", "번성"] },
+            { en: "sentiment", ko: "의견, 정서", synonyms: ["감정", "생각", "기분", "정취"] },
+            { en: "spring up", ko: "생겨나다", synonyms:["솟아나다", "나타나다", "발생하다", "튀어나오다"] },
+            { en: "approximately", ko: "거의, 대략", synonyms: ["대충", "약", "대부분"] },
+            { en: "consume", ko: "소비하다, 먹다", synonyms:["마시다", "섭취하다", "쓰다", "소비"] },
+            { en: "necessity", ko: "필수품", synonyms: ["필요성", "필수", "불가피", "필요"] },
+            { en: "widespread", ko: "광범위한, 널리 퍼진", synonyms: ["널리퍼진", "만연한", "폭넓은", "광범위"] },
+            { en: "come at a cost", ko: "대가가 따르다", synonyms:["희생이 따르다", "비용이 들다", "대가", "희생"] },
+            { en: "substantial", ko: "상당한", synonyms:["실질적인", "엄청난", "많은", "크다"] },
+            { en: "extraction", ko: "추출", synonyms:["뽑아냄", "채굴", "뽑기"] },
+            { en: "generate", ko: "발생시키다", synonyms:["만들어내다", "생성하다", "일으키다", "발생"] },
+            { en: "significant", ko: "상당한, 커다란", synonyms: ["중요한", "의미있는", "중대한", "상당"] },
+            { en: "remaining", ko: "남아 있는", synonyms:["남은", "잔여의", "잔여"] },
+            { en: "dispose of", ko: "처리하다", synonyms:["버리다", "처분하다", "없애다"] },
+            { en: "vast", ko: "어마어마한, 방대한", synonyms:["거대한", "엄청난", "광대한", "방대"] },
+            { en: "quantity", ko: "양", synonyms:["수량", "분량", "크기"] },
+            { en: "landfill", ko: "쓰레기 매립지", synonyms: ["매립", "쓰레기장", "매립지"] },
+            { en: "release", ko: "방출하다, 풀어 주다", synonyms:["놓아주다", "석방하다", "발표하다", "출시하다", "방출"] },
+            { en: "potent", ko: "강력한, 유력한", synonyms:["힘센", "강한", "효능이 있는", "강력"] },
+            { en: "incinerate", ko: "소각하다", synonyms: ["태우다", "불태우다", "소각"] },
+            { en: "take into account", ko: "고려하다", synonyms:["참작하다", "생각하다", "감안하다", "계산에 넣다"] },
+            { en: "compound", ko: "화합물, 복합체", synonyms:["혼합물", "합성물", "복합"] },
+            { en: "measure", ko: "대책, 조치", synonyms: ["측정하다", "재다", "수단", "방법"] },
+            { en: "in action", ko: "활동하는, 작동하는", synonyms:["움직이는", "실행중인", "작동중인", "활동", "작동"] },
+            { en: "collaborate", ko: "협력하다", synonyms:["협동하다", "공동작업하다", "함께하다", "협업하다"] },
+            { en: "process", ko: "처리하다, 가공하다", synonyms: ["과정", "공정", "절차", "처리", "가공"] },
+            { en: "impurity", ko: "불순물", synonyms:["찌꺼기", "더러움", "불순"] },
+            { en: "fertilizer", ko: "비료", synonyms: ["거름", "퇴비"] },
+            { en: "transform", ko: "변형시키다, 바꾸다", synonyms:["변환하다", "탈바꿈하다", "변형", "바꾸다"] },
+            { en: "produce", ko: "농작물, 농산물", synonyms: ["생산하다", "만들다", "생산품", "농산품"] },
+            { en: "repurpose", ko: "다른 목적에 맞게 만들다", synonyms:["용도를 변경하다", "재사용하다", "개조하다", "재활용하다"] },
+            { en: "in this manner", ko: "이런 식으로", synonyms:["이와 같이", "이런 방법으로", "이렇게"] },
+            { en: "a wide range of", ko: "다양한", synonyms: ["광범위한", "폭넓은", "여러가지의", "넓은 범위의"] },
+            { en: "log", ko: "통나무, 장작", synonyms:["기록하다", "일지", "기록"] },
+            { en: "fabric", ko: "직물, 천", synonyms: ["옷감", "구조", "섬유"] },
+            { en: "absorb", ko: "흡수하다", synonyms:["빨아들이다", "받아들이다", "흡수"] },
+            { en: "appealing", ko: "매력적인, 흥미로운", synonyms: ["호소하는", "끌리는", "매력"] },
+            { en: "appearance", ko: "외관", synonyms:["겉모습", "출현", "나타남", "외모", "생김새"] },
+            { en: "preserve", ko: "보존하다", synonyms:["보호하다", "유지하다", "지키다", "보존"] },
+            { en: "take steps", ko: "조치를 취하다", synonyms:["절차를 밟다", "단계", "행동을 취하다", "조치"] },
+            { en: "sustainable", ko: "지속 가능한", synonyms:["유지할 수 있는", "견딜 수 있는", "지속가능", "지속가능한"] },
+            { en: "dedicate", ko: "헌신하다, 바치다", synonyms:["전념하다", "쏟다", "바치다", "헌신", "전념"] },
+            { en: "encourage", ko: "격려하다", synonyms:["장려하다", "용기를 북돋다", "촉구하다", "응원하다", "권장하다"] }
         ];
 
         let words =[];
@@ -173,15 +173,10 @@
         let consecutiveCorrect = 0;
         
         // 통계
-        let stats = {
-            easyTotal: 0, easyCorrect: 0,
-            hardTotal: 0, hardCorrect: 0,
-            mistakes:[]
-        };
+        let stats = { easyTotal: 0, easyCorrect: 0, hardTotal: 0, hardCorrect: 0, mistakes:[] };
 
         const inputEl = document.getElementById('answer-input');
 
-        // 엔터키 입력 처리
         inputEl.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') submitAnswer();
         });
@@ -211,16 +206,13 @@
         function nextQuestion() {
             if (words.length === 0) return endGame();
             
-            // 난이도 조절 알고리즘 (동적 평가)
-            if (consecutiveCorrect >= 2) {
-                isKo2En = true; // 2연속 정답시 영어 적기로 난이도업
-            } else if (consecutiveCorrect === 0) {
-                isKo2En = false; // 틀리면 다시 뜻 적기로 난이도다운
-            }
+            // 난이도 조절
+            if (consecutiveCorrect >= 2) isKo2En = true; 
+            else if (consecutiveCorrect === 0) isKo2En = false; 
 
             currentWord = words.pop();
-            
             const badge = document.getElementById('difficulty-indicator');
+            
             if (isKo2En) {
                 document.getElementById('question').innerText = currentWord.ko;
                 document.getElementById('hint').innerText = "(영어로 입력하세요)";
@@ -239,12 +231,37 @@
             inputEl.focus();
         }
 
-        function checkKoreanAnswer(input, correctAnswers) {
-            // 한글 정답 검사 (관대하게 처리)
-            const inputClean = input.replace(/\s/g, '');
-            const answers = correctAnswers.split(',').map(s => s.replace(/ /g, ''));
-            // 뜻 중에 유저가 적은 단어가 포함되어 있거나, 유저가 적은 단어에 뜻이 포함되어 있으면 정답
-            return answers.some(ans => ans.includes(inputClean) || inputClean.includes(ans));
+        // ⭐ 스마트 한국어 채점 로직 (유의어, 어근 분석 포함)
+        function checkKoreanAnswer(input, wordObj) {
+            // 학생 입력값의 띄어쓰기 및 불필요한 어미 제거
+            let inputClean = input.replace(/\s+/g, '').replace(/(하다|되다|시키다|적인|의|하는|할|됨)$/g, '');
+            if(inputClean === "") inputClean = input.replace(/\s+/g, ''); // 어미만 적었을 경우 복구
+
+            // 정답 목록 합치기 (기본 뜻 + 유의어)
+            let acceptedAnswers = wordObj.ko.split(',').map(s => s.replace(/\s+/g, ''));
+            if (wordObj.synonyms) {
+                acceptedAnswers = acceptedAnswers.concat(wordObj.synonyms.map(s => s.replace(/\s+/g, '')));
+            }
+
+            return acceptedAnswers.some(ans => {
+                // 정답의 어미도 제거하여 핵심 어근끼리 비교
+                let ansClean = ans.replace(/(하다|되다|시키다|적인|의|하는|할|됨)$/g, '');
+                if(ansClean === "") ansClean = ans;
+                
+                // 1. 핵심 단어가 정확히 일치하는 경우
+                if (ansClean === inputClean) return true;
+                
+                // 2. 포함 관계인 경우 (예: 정답이 '종', 입력이 '종류' / 정답이 '진화론적인', 입력이 '진화론')
+                if (ansClean.length === 1) {
+                    if (inputClean.includes(ansClean)) return true;
+                } else {
+                    // 단, 1글자만 적었는데 우연히 포함된 경우는 오답 처리 ('하'만 적어서 '하다' 통과되는 것 방지)
+                    if (inputClean.length >= 2) {
+                        if (ansClean.includes(inputClean) || inputClean.includes(ansClean)) return true;
+                    }
+                }
+                return false;
+            });
         }
 
         function submitAnswer() {
@@ -255,9 +272,11 @@
             let isCorrect = false;
 
             if (isKo2En) {
+                // 영어는 스펠링 정확히
                 isCorrect = (answer === currentWord.en.toLowerCase());
             } else {
-                isCorrect = checkKoreanAnswer(answer, currentWord.ko);
+                // 한국어는 스마트 채점
+                isCorrect = checkKoreanAnswer(answer, currentWord);
             }
 
             const feedbackEl = document.getElementById('feedback');
@@ -276,7 +295,7 @@
                 stats.mistakes.push(`${currentWord.en} : ${currentWord.ko}`);
             }
 
-            setTimeout(nextQuestion, 800); // 0.8초 후 다음 문제
+            setTimeout(nextQuestion, 800); 
         }
 
         function endGame() {
@@ -320,7 +339,6 @@
             if (stats.mistakes.length === 0) {
                 mistakeDiv.innerHTML = "틀린 단어가 없습니다! 완벽해요.";
             } else {
-                // 중복제거 후 출력
                 const uniqueMistakes =[...new Set(stats.mistakes)];
                 mistakeDiv.innerHTML = uniqueMistakes.map(m => `<div>- ${m}</div>`).join('');
             }
