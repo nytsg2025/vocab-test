@@ -36,8 +36,40 @@
         .correct { color: #38a169; }
         .wrong { color: #e53e3e; }
 
-        /* Result Screen */
-        .level-result { font-size: 3rem; font-weight: 700; color: #4299e1; margin: 20px 0; }
+        /* Result Screen & Characters */
+        .level-result { font-size: 3rem; font-weight: 700; color: #4299e1; margin: 10px 0 20px 0; }
+        
+        .character-container {
+            font-size: 6rem;
+            width: 140px;
+            height: 140px;
+            background: #ebf4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .character-name {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
         .stats-box { background: #f7fafc; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: left; }
         .mistake-list { text-align: left; max-height: 150px; overflow-y: auto; background: #fff5f5; padding: 15px; border-radius: 10px; font-size: 0.9rem; margin-top: 15px;}
     </style>
@@ -69,6 +101,11 @@
     <!-- 결과 화면 -->
     <div id="result-screen" class="container hidden">
         <h1>진단 결과</h1>
+        
+        <!-- 귀여운 진화 캐릭터 영역 -->
+        <div class="character-container" id="character-emoji">🥚</div>
+        <div class="character-name" id="character-name">잠자는 알</div>
+
         <div id="level-display" class="level-result">LV. 1</div>
         <p id="level-desc" class="desc" style="font-weight: 600; color: #2d3748;"></p>
         
@@ -79,33 +116,32 @@
         <h3 style="margin-bottom: 5px; font-size: 1rem;">틀린 단어 복습</h3>
         <div id="mistake-list" class="mistake-list"></div>
 
-        <button style="margin-top: 20px;" onclick="location.reload()">다시 도전하기</button>
+        <button style="margin-top: 20px;" onclick="location.reload()">다시 도전하여 진화하기!</button>
     </div>
 
     <script>
-        // ⭐ 업데이트된 단어 데이터 (요청하신 뜻과 어근 완벽 반영)
         const wordData =[
             { en: "evolutionary", ko: "진화의, 진화론적인", roots: ["진화"] },
             { en: "biologist", ko: "생물학자", roots:["생물학"] },
             { en: "locate", ko: "위치시키다, 위치하다, 위치를 찾다", roots:["위치", "알아내", "발견", "찾다", "찾기", "찾음", "찾아"] },
             { en: "fascinating", ko: "매혹적인, 대단히 흥미로운", roots:["매혹", "흥미", "매력", "멋진", "재미"] },
-            { en: "companion", ko: "친구, 동반자", roots: ["친구", "동반", "동행", "반려", "동료"] },
+            { en: "companion", ko: "친구, 동반자", roots:["친구", "동반", "동행", "반려", "동료"] },
             { en: "responsive", ko: "반응하는", roots:["반응", "민감", "호응", "대답"] },
             { en: "behavior", ko: "행동", roots:["행동", "품행", "태도", "행위"] },
             { en: "anthropologist", ko: "인류학자", roots: ["인류학"] },
             { en: "conduct", ko: "행동하다, 활동을 하다", roots:["행동", "활동", "수행", "지휘", "실시", "진행"] },
-            { en: "ancestor", ko: "조상", roots: ["조상", "선조", "선대"] },
+            { en: "ancestor", ko: "조상", roots:["조상", "선조", "선대"] },
             { en: "at random", ko: "무작위로", roots:["무작위", "임의", "맘대로", "마음대로", "랜덤", "마구잡이"] },
             { en: "conclude", ko: "결론을 내다", roots:["결론", "끝내", "마치", "끝마"] },
             { en: "species", ko: "종(種)", roots:["종류", "종"] },
-            { en: "evolve", ko: "발달하다, 진화하다", roots: ["발달", "진화", "발전"] },
+            { en: "evolve", ko: "발달하다, 진화하다", roots:["발달", "진화", "발전"] },
             { en: "colleague", ko: "동료", roots: ["동료", "동업", "친구"] },
             { en: "genetically", ko: "유전적으로", roots: ["유전"] },
             { en: "cooperative", ko: "협력적인", roots:["협력", "협동", "협조"] },
             { en: "device", ko: "장치", roots:["장치", "기구", "도구", "기기", "설비"] },
             { en: "occasionally", ko: "가끔", roots:["가끔", "때때", "종종", "이따금"] },
             { en: "get along", ko: "잘 지내다", roots:["잘지내", "어울리", "사이", "친하"] },
-            { en: "extinction", ko: "멸종", roots: ["멸종", "소멸"] },
+            { en: "extinction", ko: "멸종", roots:["멸종", "소멸"] },
             { en: "attention", ko: "관심, 주의", roots:["관심", "주의", "집중", "주목"] },
             { en: "superior", ko: "우월한", roots:["우월", "뛰어난", "우수", "상급", "나은", "월등"] },
             { en: "attribute", ko: "속성, 자질", roots:["속성", "자질", "특징", "특성", "기인", "탓"] },
@@ -114,7 +150,7 @@
             { en: "competitive", ko: "경쟁적인, 경쟁력 있는", roots: ["경쟁"] },
             { en: "propose", ko: "제안하다", roots:["제안", "청혼", "제시", "제의"] },
             { en: "alternative", ko: "대안, 대체의", roots:["대체", "대안", "대신"] },
-            { en: "comforting", ko: "위안이 되는", roots: ["위안", "위로", "편안"] },
+            { en: "comforting", ko: "위안이 되는", roots:["위안", "위로", "편안"] },
             { en: "bouquet", ko: "꽃다발", roots:["꽃다발", "부케"] },
             { en: "harmonize", ko: "조화를 이루다, 어울리다", roots:["조화", "어울리", "화합", "맞추"] },
             { en: "contribute", ko: "기여하다, 도움이 되다", roots:["기여", "도움", "공헌", "이바지", "기부"] },
@@ -131,9 +167,9 @@
             { en: "generate", ko: "생성하다, 발생시키다", roots:["생성", "발생", "만들", "일으키"] },
             { en: "significant", ko: "상당한, 커다란", roots:["상당", "커다", "중요", "의미", "중대", "크다", "큰"] },
             { en: "remaining", ko: "남아 있는", roots:["남아", "남은", "잔여"] },
-            { en: "dispose of", ko: "처리하다", roots: ["처리", "버리", "처분", "없애"] },
+            { en: "dispose of", ko: "처리하다", roots:["처리", "버리", "처분", "없애"] },
             { en: "vast", ko: "어마어마한, 방대한", roots:["어마어마", "방대", "거대", "엄청", "광대", "막대", "크다", "큰", "넓다", "넓은"] },
-            { en: "quantity", ko: "양", roots: ["수량", "분량", "크기", "양"] },
+            { en: "quantity", ko: "양", roots:["수량", "분량", "크기", "양"] },
             { en: "landfill", ko: "쓰레기 매립지", roots:["매립", "쓰레기장"] },
             { en: "release", ko: "방출하다, 풀어 주다", roots:["방출", "풀어", "놓아", "석방", "발표", "출시", "해방", "배출"] },
             { en: "potent", ko: "강력한, 유력한", roots:["강력", "유력", "힘센", "강한", "효능"] },
@@ -144,8 +180,8 @@
             { en: "in action", ko: "활동하는, 작동하는", roots:["활동", "작동", "움직이", "실행"] },
             { en: "collaborate", ko: "협력하다", roots:["협력", "협동", "공동", "함께", "협업"] },
             { en: "process", ko: "처리하다, 가공하다", roots:["처리", "가공", "과정", "공정", "절차"] },
-            { en: "impurity", ko: "불순물", roots: ["불순", "찌꺼기", "더러움"] },
-            { en: "fertilizer", ko: "비료", roots: ["비료", "거름", "퇴비"] },
+            { en: "impurity", ko: "불순물", roots:["불순", "찌꺼기", "더러움"] },
+            { en: "fertilizer", ko: "비료", roots:["비료", "거름", "퇴비"] },
             { en: "transform", ko: "변형시키다, 바꾸다", roots:["변형", "바꾸", "변환", "탈바꿈", "개조", "바뀜"] },
             { en: "produce", ko: "농작물, 농산물", roots:["농작", "농산", "생산", "만들"] },
             { en: "repurpose", ko: "다른 목적에 맞게 만들다", roots:["목적", "용도", "재사용", "개조", "재활용"] },
@@ -153,7 +189,7 @@
             { en: "a wide range of", ko: "다양한", roots:["다양", "광범위", "폭넓", "여러", "넓은"] },
             { en: "log", ko: "통나무, 장작", roots:["통나무", "장작", "일지", "기록"] },
             { en: "fabric", ko: "섬유, 직물, 천", roots:["섬유", "직물", "옷감", "구조", "천"] },
-            { en: "absorb", ko: "흡수하다", roots: ["흡수", "빨아", "받아"] },
+            { en: "absorb", ko: "흡수하다", roots:["흡수", "빨아", "받아"] },
             { en: "appealing", ko: "매력적인, 흥미로운", roots:["매력", "흥미", "호소", "끌리"] },
             { en: "appearance", ko: "외관", roots:["외관", "겉모습", "출현", "나타", "외모", "생김새"] },
             { en: "preserve", ko: "보존하다", roots:["보존", "보호", "유지", "지키"] },
@@ -164,7 +200,7 @@
         ];
 
         let words =[];
-        let timeLeft = 180; // 3분
+        let timeLeft = 180;
         let timerInterval;
         let currentWord = null;
         let isKo2En = false; 
@@ -178,7 +214,7 @@
         });
 
         function startGame() {
-            words = [...wordData].sort(() => Math.random() - 0.5); 
+            words =[...wordData].sort(() => Math.random() - 0.5); 
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
             startTimer();
@@ -221,7 +257,6 @@
             inputEl.focus();
         }
 
-        // ⭐ 초강력 스마트 채점 로직
         function checkKoreanAnswer(input, wordObj) {
             const inputClean = input.replace(/\s+/g, '');
             const roots = wordObj.roots;
@@ -281,20 +316,34 @@
             
             let level = 1;
             let desc = "";
+            let characterEmoji = "🥚";
+            let characterName = "잠자는 알";
 
             if (stats.hardCorrect >= 5 && hardRate >= 0.7) {
                 level = 4;
-                desc = "단어의 뜻을 완벽히 숙지하고 있으며, 어려운 영작도 거침없이 해내는 마스터 수준입니다!";
+                characterEmoji = "🦅";
+                characterName = "마스터 독수리";
+                desc = "어려운 영작도 거침없이 해내는 어휘력 마스터, 비상하는 독수리 수준입니다!";
             } else if (stats.hardCorrect >= 2 || (easyRate >= 0.8 && stats.easyTotal > 10)) {
                 level = 3;
-                desc = "대부분의 한국어 뜻을 잘 알고 있으며, 기초적인 영어 작문도 제법 능숙합니다.";
+                characterEmoji = "🐥";
+                characterName = "당당한 꼬마 새";
+                desc = "대부분의 뜻을 잘 알고 있으며 영어 작문도 제법 능숙한 당당한 꼬마 새 수준입니다.";
             } else if (stats.easyCorrect >= 5) {
                 level = 2;
-                desc = "단어의 기초적인 뜻은 알고 있으나, 아직 정확한 스펠링을 외우거나 응용하기엔 헷갈려 합니다.";
+                characterEmoji = "🐣";
+                characterName = "초보 병아리";
+                desc = "기초적인 뜻은 알고 있으나 스펠링은 헷갈리는, 이제 막 깨어난 병아리 수준입니다.";
             } else {
                 level = 1;
-                desc = "단어의 한국어 뜻을 몇 개 알지만 아직 암기가 덜 되어 영어로 적기를 매우 어려워합니다. 집중적인 단어 암기가 필요합니다!";
+                characterEmoji = "🥚";
+                characterName = "잠자는 알";
+                desc = "아직 암기가 덜 되어 잠재력이 껍질 속에 숨어있는 잠자는 알 수준입니다. 집중적인 암기가 필요해요!";
             }
+
+            // 캐릭터 업데이트
+            document.getElementById('character-emoji').innerText = characterEmoji;
+            document.getElementById('character-name').innerText = characterName;
 
             document.getElementById('level-display').innerText = `LV. ${level}`;
             document.getElementById('level-desc').innerText = desc;
