@@ -41,16 +41,17 @@
         
         .character-container {
             font-size: 6rem;
-            width: 140px;
-            height: 140px;
-            background: #ebf4ff;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #fffaf0 0%, #ffe4e6 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 15px auto;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 15px 25px rgba(255, 182, 193, 0.4);
             animation: float 3s ease-in-out infinite;
+            border: 4px solid #fff;
         }
 
         @keyframes float {
@@ -60,14 +61,15 @@
         }
 
         .character-name {
-            background: #edf2f7;
-            color: #4a5568;
-            padding: 5px 15px;
-            border-radius: 20px;
+            background: #fff0f5;
+            color: #d53f8c;
+            padding: 8px 20px;
+            border-radius: 25px;
             display: inline-block;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 700;
             margin-bottom: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
         .stats-box { background: #f7fafc; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: left; }
@@ -102,9 +104,9 @@
     <div id="result-screen" class="container hidden">
         <h1>진단 결과</h1>
         
-        <!-- 귀여운 진화 캐릭터 영역 -->
-        <div class="character-container" id="character-emoji">🥚</div>
-        <div class="character-name" id="character-name">잠자는 알</div>
+        <!-- 귀여운 동물 캐릭터 영역 -->
+        <div class="character-container" id="character-emoji">🐹</div>
+        <div class="character-name" id="character-name">애기 햄스터</div>
 
         <div id="level-display" class="level-result">LV. 1</div>
         <p id="level-desc" class="desc" style="font-weight: 600; color: #2d3748;"></p>
@@ -121,7 +123,7 @@
 
     <script>
         const wordData =[
-            { en: "evolutionary", ko: "진화의, 진화론적인", roots: ["진화"] },
+            { en: "evolutionary", ko: "진화의, 진화론적인", roots:["진화"] },
             { en: "biologist", ko: "생물학자", roots:["생물학"] },
             { en: "locate", ko: "위치시키다, 위치하다, 위치를 찾다", roots:["위치", "알아내", "발견", "찾다", "찾기", "찾음", "찾아"] },
             { en: "fascinating", ko: "매혹적인, 대단히 흥미로운", roots:["매혹", "흥미", "매력", "멋진", "재미"] },
@@ -316,29 +318,29 @@
             
             let level = 1;
             let desc = "";
-            let characterEmoji = "🥚";
-            let characterName = "잠자는 알";
+            let characterEmoji = "🐹";
+            let characterName = "애기 햄스터";
 
             if (stats.hardCorrect >= 5 && hardRate >= 0.7) {
                 level = 4;
-                characterEmoji = "🦅";
-                characterName = "마스터 독수리";
-                desc = "어려운 영작도 거침없이 해내는 어휘력 마스터, 비상하는 독수리 수준입니다!";
+                characterEmoji = "🦄";
+                characterName = "환상의 유니콘";
+                desc = "어려운 영작도 거침없이 해내는 어휘력 마스터! 전설 속에 등장하는 똑똑한 유니콘 수준입니다.";
             } else if (stats.hardCorrect >= 2 || (easyRate >= 0.8 && stats.easyTotal > 10)) {
                 level = 3;
-                characterEmoji = "🐥";
-                characterName = "당당한 꼬마 새";
-                desc = "대부분의 뜻을 잘 알고 있으며 영어 작문도 제법 능숙한 당당한 꼬마 새 수준입니다.";
+                characterEmoji = "🐻";
+                characterName = "듬직한 곰돌이";
+                desc = "대부분의 뜻을 잘 알고 있으며 영어 작문도 제법 능숙한 듬직하고 멋진 곰돌이 수준입니다.";
             } else if (stats.easyCorrect >= 5) {
                 level = 2;
-                characterEmoji = "🐣";
-                characterName = "초보 병아리";
-                desc = "기초적인 뜻은 알고 있으나 스펠링은 헷갈리는, 이제 막 깨어난 병아리 수준입니다.";
+                characterEmoji = "🐿️"; /* 쿼카 전용 이모지가 없어 가장 비슷한 다람쥐 활용 */
+                characterName = "애기 쿼카";
+                desc = "기초적인 뜻은 잘 알고 항상 웃고 있는 긍정왕! 귀여운 애기 쿼카 수준입니다.";
             } else {
                 level = 1;
-                characterEmoji = "🥚";
-                characterName = "잠자는 알";
-                desc = "아직 암기가 덜 되어 잠재력이 껍질 속에 숨어있는 잠자는 알 수준입니다. 집중적인 암기가 필요해요!";
+                characterEmoji = "🐹";
+                characterName = "애기 햄스터";
+                desc = "단어 암기를 이제 막 시작한 뽀시래기 애기 햄스터 수준입니다. 쳇바퀴 돌듯 복습이 필요해요!";
             }
 
             // 캐릭터 업데이트
